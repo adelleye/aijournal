@@ -1,4 +1,5 @@
 "use client";
+// Importing necessary libraries and components
 import React, { useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
@@ -11,17 +12,22 @@ import { useDebounce } from "@/lib/useDebounce";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
+// Defining the type of the note
 type Props = { note: NoteType };
 
+// Main component
 const TipTapEditor = ({ note }: Props) => {
+  // State for the editor
   const [editorState, setEditorState] = useState(
     note.editorState || `<h1>${note.name}</h1>`
   );
 
+  // Using AI completion
   const { complete, completion } = useCompletion({
     api: "/api/completion",
   });
 
+  // Mutation for saving entries
   const saveEntries = useMutation({
     mutationFn: async () => {
       const response = await axios.post("/api/saveEntries", {
@@ -32,6 +38,7 @@ const TipTapEditor = ({ note }: Props) => {
     },
   });
 
+  // Custom text with keyboard shortcuts
   const customText = Text.extend({
     addKeyboardShortcuts() {
       return {
@@ -46,12 +53,14 @@ const TipTapEditor = ({ note }: Props) => {
     },
   });
 
+  // Function to handle reflection click
   const handleReflectClick = () => {
     const prompt = editor?.getText() || ""; // Get current text from the editor
     console.log("The journal entry: ", prompt);
     complete(prompt); // Log the text to the console
   };
 
+  // Using the editor
   const editor = useEditor({
     autofocus: true,
     extensions: [StarterKit, customText],
@@ -63,10 +72,7 @@ const TipTapEditor = ({ note }: Props) => {
 
   const lastCompletion = React.useRef("");
 
-  /*React.useEffect(() => {
-    console.log("reflection:", completion);
-  }, [completion]); */
-
+  // Effect to handle completion
   React.useEffect(() => {
     if (!completion || !editor) return;
     const diff = completion.slice(lastCompletion.current.length);
@@ -75,8 +81,10 @@ const TipTapEditor = ({ note }: Props) => {
     console.log("reflection:", diff);
   }, [completion, editor]);
 
+  // Debouncing the editor state
   const debouncedEditorState = useDebounce(editorState, 500);
 
+  // Effect to handle saving of entries
   React.useEffect(() => {
     console.log(debouncedEditorState, "hello");
     if (debouncedEditorState === "") return;
@@ -106,4 +114,5 @@ const TipTapEditor = ({ note }: Props) => {
   );
 };
 
+// Exporting the component
 export default TipTapEditor;
