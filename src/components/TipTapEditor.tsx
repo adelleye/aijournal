@@ -37,7 +37,7 @@ const TipTapEditor = ({ note }: Props) => {
       return {
         "Shift-a": () => {
           const prompt = this.editor.getText().split(" ").join(" ");
-          //complete(prompt);
+          complete(prompt);
           console.log("The journal entry: ", prompt);
 
           return true;
@@ -46,22 +46,39 @@ const TipTapEditor = ({ note }: Props) => {
     },
   });
 
-  React.useEffect(() => {
-    //console.log(completion);
-  }, [completion]);
+  const handleReflectClick = () => {
+    const prompt = editor?.getText() || ""; // Get current text from the editor
+    console.log("The journal entry: ", prompt);
+    complete(prompt); // Log the text to the console
+  };
 
   const editor = useEditor({
     autofocus: true,
-    extensions: [StarterKit],
+    extensions: [StarterKit, customText],
     content: editorState,
     onUpdate: ({ editor }) => {
       setEditorState(editor.getHTML());
     },
   });
+
+  const lastCompletion = React.useRef("");
+
+  /*React.useEffect(() => {
+    console.log("reflection:", completion);
+  }, [completion]); */
+
+  React.useEffect(() => {
+    if (!completion || !editor) return;
+    const diff = completion.slice(lastCompletion.current.length);
+    lastCompletion.current = completion;
+    editor.commands.insertContent(diff);
+    console.log("reflection:", diff);
+  }, [completion, editor]);
+
   const debouncedEditorState = useDebounce(editorState, 500);
 
   React.useEffect(() => {
-    console.log(debouncedEditorState);
+    console.log(debouncedEditorState, "hello");
     if (debouncedEditorState === "") return;
     saveEntries.mutate(undefined, {
       onSuccess: (data) => {
@@ -84,7 +101,7 @@ const TipTapEditor = ({ note }: Props) => {
         <EditorContent editor={editor} />
       </div>
 
-      <Button> Reflect</Button>
+      <Button onClick={handleReflectClick}> Reflect</Button>
     </>
   );
 };
