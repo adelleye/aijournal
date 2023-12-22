@@ -78,6 +78,7 @@ const TipTapEditor = ({ note }: Props) => {
     const diff = completion.slice(lastCompletion.current.length);
     lastCompletion.current = completion;
     editor.commands.insertContent(diff);
+
     console.log("reflection:", diff);
   }, [completion, editor]);
 
@@ -108,6 +109,8 @@ const TipTapEditor = ({ note }: Props) => {
       <div className="prose prose-sm w-full mt-4">
         <EditorContent editor={editor} />
       </div>
+
+      <div className="h-4"></div>
 
       <Button onClick={handleReflectClick}> Reflect</Button>
     </>

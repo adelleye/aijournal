@@ -56,6 +56,7 @@ const JournalPage = async ({ params: { noteId } }: Props) => {
         <div className="border-stone-200 shadow-xl border rounded-lg px-16 py-8 w-full">
           <TipTapEditor note={note} />
         </div>
+        <div className=" mt-4">Hello</div>
       </div>
     </div>
   );

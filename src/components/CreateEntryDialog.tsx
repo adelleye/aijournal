@@ -33,6 +33,15 @@ const CreateEntryDialog = (props: Props) => {
   // Using useState hook for managing input state
   const [input, setInput] = useState("");
 
+  const uploadToFirebase = useMutation({
+    mutationFn: async (noteId: string) => {
+      const response = await axios.post("/api/uploadToFirebase", {
+        noteId,
+      });
+      return response.data;
+    },
+  });
+
   // Defining createJournalEntry mutation
   const createJournalEntry = useMutation({
     mutationFn: async () => {
@@ -64,6 +73,7 @@ const CreateEntryDialog = (props: Props) => {
       onSuccess: ({ note_id }) => {
         console.log("Entry created");
         console.log("this is the Entry note id:", { note_id });
+        uploadToFirebase.mutate(note_id);
         router.push(`/journalentry/${note_id}`);
       },
       // On error, logging the error and alerting the user
