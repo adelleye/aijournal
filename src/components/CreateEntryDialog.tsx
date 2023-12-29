@@ -107,7 +107,7 @@ const CreateEntryDialog = (props: Props) => {
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="H."
+            placeholder="I'm feeling..."
           />
           <div className="h-4"></div>
           <div className="flex items-center gap-2 ">
