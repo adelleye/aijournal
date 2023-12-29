@@ -61,3 +61,16 @@
   background-color: #dadada;
   border-radius: 2px;
 }
+
+#gradient-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  --gradient-color-1: #449ce4;
+  --gradient-color-2: #2f8bc1;
+  --gradient-color-3: #ccbeee;
+  --gradient-color-4: #4c57f6;
+}

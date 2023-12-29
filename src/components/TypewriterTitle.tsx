@@ -12,10 +12,14 @@ const TypewriterTitle = (props: Props) => {
       }}
       onInit={(typewriter) => {
         typewriter
-          .typeString("Sometimes I move")
+          .typeString(
+            "Dive into a new depth of self-awareness with AI that understands you."
+          )
           .pauseFor(1000)
           .deleteAll()
-          .typeString("Sometimes I groove")
+          .typeString(
+            "From fleeting thoughts to profound insights, your journal is your journey."
+          )
           .start();
       }}
     />

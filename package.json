@@ -15,6 +15,9 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@react-spring/three": "^9.7.3",
+    "@react-three/drei": "^9.92.5",
+    "@react-three/fiber": "^8.15.12",
     "@tanstack/react-query": "^5.13.4",
     "@tiptap/extension-text": "^2.1.13",
     "@tiptap/pm": "^2.1.13",
@@ -36,9 +39,11 @@
     "pg": "^8.11.3",
     "react": "^18",
     "react-dom": "^18",
+    "shadergradient": "^1.2.5",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
-    "typewriter-effect": "^2.21.0"
+    "typewriter-effect": "^2.21.0",
+    "whatamesh": "^0.2.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
