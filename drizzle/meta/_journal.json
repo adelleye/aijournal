@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1704838858255,
+      "tag": "0000_fast_red_ghost",
+      "breakpoints": true
+    }
+  ]
+}
