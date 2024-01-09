@@ -7,7 +7,7 @@ export const $notes = pgTable("notes", {
   // "id" is a unique number that is automatically generated for each note
   id: serial("id").primaryKey(),
 
-  uuid: uuid("uuid").default(sql`gen_random_uuid()`), // public-facing idenitifer
+  uuid: uuid("uuid"), // public facing identifier
 
   // "name" is the name of the note and it cannot be null (i.e., it must have a value)
   name: text("name").notNull(),
