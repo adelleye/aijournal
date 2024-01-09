@@ -1,10 +1,14 @@
 // Importing necessary functions and types from "drizzle-orm/pg-core"
-import { pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 // Defining a table in the database named "notes" with specific columns and their properties
 export const $notes = pgTable("notes", {
   // "id" is a unique number that is automatically generated for each note
   id: serial("id").primaryKey(),
+
+  uuid: uuid("uuid").default(sql`gen_random_uuid()`), // public-facing idenitifer
+
   // "name" is the name of the note and it cannot be null (i.e., it must have a value)
   name: text("name").notNull(),
   // "createdAt" is the time when the note was created. It is automatically set to the current time and cannot be null
