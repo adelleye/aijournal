@@ -6,55 +6,60 @@ import { $notes } from "@/lib/db/schema";
 import { generateImage, generateImagePrompt } from "@/lib/openai";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { v4 as uuidv4 } from "uuid";
 
-// Function to handle POST request
 export async function POST(req: Request) {
-  // Extracting userId from auth
   const { userId } = auth();
 
-  // If userId is not present, return Unauthorized
   if (!userId) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  // Parsing the request body
-  const body = await req.json();
-  const { name } = body;
-  // Generating image description using AI
-  const image_description = await generateImagePrompt(name);
-  console.log(image_description);
-
-  // If image description is not generated, return error
-  if (!image_description) {
-    return new NextResponse("failed to generate image description", {
+  const uuid = uuidv4();
+  if (!uuid) {
+    return new NextResponse("Failed to create uuid for new note", {
       status: 500,
     });
   }
 
-  // Generating image using AI
-  const image_url = await generateImage(image_description);
-
-  // If image is not generated, return error
-  if (!image_url) {
-    return new NextResponse("failed to generate image", {
-      status: 500,
-    });
-  }
-
-  // Inserting new note into the database
-  const notes_id = await db
+  const newNote = await db
     .insert($notes)
     .values({
+      uuid,
       name,
       userId,
-      imageUrl: image_url,
     })
     .returning({
-      insertedId: $notes.id,
+      uuid: $notes.uuid,
+      id: $notes.id,
     });
 
-  // Returning the inserted note's id
+  console.log("SERVER JSON", NextResponse.json);
+
   return NextResponse.json({
-    note_id: notes_id[0].insertedId,
+    note_uuid: newNote[0].uuid,
+    note_id: newNote[0].id,
   });
 }
+
+// Generating image description using AI
+
+// const image_description = await generateImagePrompt(name);
+// console.log(image_description);
+
+// // If image description is not generated, return error
+// if (!image_description) {
+//   return new NextResponse("failed to generate image description", {
+//     status: 500,
+//   });
+// }
+
+// // Generating image using AI
+// const image_url = await generateImage(image_description);
+
+// // If image is not generated, return error
+// if (!image_url) {
+//   return new NextResponse("failed to generate image", {
+//     status: 500,
+//   });
+// }

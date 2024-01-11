@@ -27,6 +27,7 @@ const JournalPage = async ({ params: { noteId } }: Props) => {
     .select()
     .from($notes)
     .where(and(eq($notes.id, parseInt(noteId)), eq($notes.userId, userId)));
+  // TODO change this to use uuid instead
 
   if (notes.length != 1) {
     return redirect("/dashboard");
