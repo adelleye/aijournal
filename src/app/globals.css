@@ -69,8 +69,8 @@
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  --gradient-color-1: #449ce4;
-  --gradient-color-2: #2f8bc1;
-  --gradient-color-3: #ccbeee;
-  --gradient-color-4: #4c57f6;
+  --gradient-color-1: #1ed4ce;
+  --gradient-color-2: #b8fde7;
+  --gradient-color-3: #26c6f8;
+  --gradient-color-4: #0081c2;
 }
