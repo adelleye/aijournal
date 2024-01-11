@@ -24,13 +24,13 @@ export default function Home() {
   return (
     <>
       {isClient && <canvas id="gradient-canvas"></canvas>}
-      <div className="">
+      <div className="grainy">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <h1 className="font-semibold text-center text-slate-100 md:text-6xl text-7xl">
             What's on your mind?
           </h1>
           <div className="mt-4"></div>
-          <h2 className=" md:text-2xl lg:text-2xl text-center text-slate-200">
+          <h2 className=" md:text-xl lg:text-xl text-center text-slate-200">
             <TypewriterTitle />
           </h2>
           <div className="mt-8"></div>
