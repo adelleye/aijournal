@@ -13,10 +13,10 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 // Defining the type of the note
-type Props = { note: NoteType };
+type Props = { note: NoteType; onAICompletion: (completion: string) => void };
 
 // Main component
-const TipTapEditor = ({ note }: Props) => {
+const TipTapEditor = ({ note, onAICompletion }: Props) => {
   // State for the editor
   const [editorState, setEditorState] = useState(
     note.editorState || `<h1>${note.name}</h1>`
@@ -75,11 +75,14 @@ const TipTapEditor = ({ note }: Props) => {
   // Effect to handle completion
   React.useEffect(() => {
     if (!completion || !editor) return;
-    const diff = completion.slice(lastCompletion.current.length);
-    lastCompletion.current = completion;
-    editor.commands.insertContent(diff);
 
-    console.log("reflection:", diff);
+    // If the completion has not changed, don't update the state
+    if (completion === lastCompletion.current) return;
+
+    lastCompletion.current = completion; // Update the last completion reference
+    onAICompletion(completion); // Pass the entire completion to the callback
+
+    console.log("reflection:", completion);
   }, [completion, editor]);
 
   // Debouncing the editor state

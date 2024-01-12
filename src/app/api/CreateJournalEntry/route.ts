@@ -21,6 +21,7 @@ export async function POST(req: Request) {
       status: 500,
     });
   }
+  const name = "Some name";
 
   const newNote = await db
     .insert($notes)
